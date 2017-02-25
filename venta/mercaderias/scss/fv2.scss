@@ -1,0 +1,205 @@
+$slightgray: #fafafa;
+$lightgray: #f5f5f5;
+$gray: #e0e0e0;
+$graystrong:#939393;
+$sgraystrong:#263238;
+$indigo: #3f51b5;
+$sblue: #2D3F50;
+$lblue: #2D92D0;
+$lgreen:#46aa71;
+
+   input[type="checkbox"],
+   input[type="radio"]{
+      visibility: hidden;
+      display: none;
+   }
+
+._form{
+   padding: 10px;
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+
+   >._title{
+      font-size: 1.5em;
+   }
+
+   >._content{
+      padding: 25px 10px 0px 10px;
+      display: flex;
+      flex-direction: column;
+      background: $lightgray;
+
+      >.w_section{
+         display: flex;
+         flex-direction: row;
+         margin-bottom: 30px;
+
+         >._ssection{
+            flex: 1 0 auto;
+            border: 1px solid $graystrong;
+            position: relative;
+            padding: 20px 10px 10px 10px;
+            margin-right: 10px;
+            background: #FFF;
+
+            >._title{
+               position: absolute;
+               background: white;
+               color: $sgraystrong;
+               padding: 5px;
+               font-size: 12px;
+               text-transform: uppercase;
+               top: -15px;
+               left: 10px;
+            }
+
+            >._content{
+               display: flex;
+               flex-direction: column;
+
+               .col3{width: 33.3333%;}
+               .col2{width: 50%;}
+
+               >.v_wrappipt{
+                  margin-bottom: 3px;
+                  display: flex;
+
+                  .container_ipts{
+                     width: 100%;
+                     display: flex;
+
+                     >input[type="text"],
+                     input[type="password"],
+                     input[type="date"],
+                     textarea,select{
+                        flex: 1 0 auto !important;
+                        padding: 3px !important;
+                     }
+
+                  }
+
+                  >label{
+                     color: $graystrong;
+                     flex: 1 0 30%;
+                     overflow: hidden;
+                     text-align: right;
+                     padding-right: 10px;
+                  }
+
+                  >input[type="text"],
+                  input[type="password"],
+                  input[type="date"],
+                  textarea,select,.btnform{
+                     flex: 2 0 70%;
+                     padding: 3px;
+                     font-family: roboto;
+                  }
+                  >textarea{
+                     resize: vertical;
+                  }
+               }
+
+               >.v_wrappipt:last-child{
+                  margin-bottom: 0px;
+               }
+
+               #tartsjoinprovs,#tproviders,#tdistt1{
+                  border-collapse: collapse;
+                  margin: 0 auto;
+                  border: 1px solid $graystrong;
+                  tr >td,tr >th{
+                     max-width: 120px;
+                     font-size: 12px
+                  }
+
+                  tr>th{
+                     color: white !important;
+                     background: $sgraystrong;
+                  }
+
+                  input{
+                     max-width: 100%;
+                     padding: 3px;
+                     border:none;
+                  }
+               }
+            }
+
+            .addart{
+               margin-top: 5px;
+               font-size: 18px;
+               padding: 5px;
+            }
+
+            >.h_content{
+               display: flex;
+               flex-direction: row;
+               .col3{width: 33.3333%;}
+               .col2{width: 50%;}
+
+               ._wrappipt{
+
+                  >label{
+                     display: block;
+                     width: 100%;
+                     text-align: center;
+                     color: $graystrong;
+                  }
+
+                  >input[type="text"],
+                  input[type="password"],
+                  input[type="date"],
+                  textarea,select,.btnform{
+                     width: 100%;
+                     padding: 3px;
+                     font-family: roboto;
+                     margin: 3px;
+                  }
+                  >textarea{
+                     resize: vertical;
+                  }
+
+               }
+            }
+         }
+
+         >._ssection:last-child{margin: 0px;}
+
+      }
+
+      >._botonera{
+         display: flex;
+         flex-direction: row;
+
+         button{
+            flex: 1 0 auto;
+            padding: 5px;
+            font-size: 1.2em;
+         }
+      }
+   }
+
+   .lab_radio,.lab_check{
+      height: 100%;
+      width: 100%;
+      font-size: 18px;
+      &:hover{
+         cursor: pointer;
+      }
+   }
+
+   .ischeck{
+      color: $lblue !important;
+   }
+
+   .lab_initrow{
+      text-align: right;
+      padding-right: 10px;
+      width: 100%;
+   }
+}
+
+.formtowrite{
+   display: none;
+}

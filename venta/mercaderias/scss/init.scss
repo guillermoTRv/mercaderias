@@ -1,0 +1,191 @@
+$slightgray: #fafafa;
+$lightgray: #f5f5f5;
+$gray: #e0e0e0;
+$graystrong:#939393;
+$sgraystrong:#263238;
+$indigo: #3f51b5;
+$sblue: #2D3F50;
+$lblue: #2D92D0;
+$lgreen:#46aa71;
+
+*{
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+}
+
+body,html{
+   input[type="checkbox"],
+   input[type="radio"],
+   input[type="file"]{
+      visibility: hidden;
+      display: none;
+   }
+   background: #FFF;
+   font-family: 'roboto';
+   font-size: 14px;
+   display: flex;
+   flex-direction: column;
+   align-items: stretch;
+   height: 100%;
+   color: $sblue;
+   max-width: 100%;
+
+   header{
+      background: white;
+      border-bottom: 3px solid $gray;
+      position: fixed;
+      max-width: 100%;
+      min-width: 100%;
+      z-index: 100000;
+      top: 0;
+      left: 0;
+
+      display: flex;
+      justify-content: space-between;
+      flex-flow: wrap;
+
+      .sectionheader{
+         display: flex;
+         position: relative;
+
+         a{
+            text-decoration: none;
+            position: relative;
+            height: 100%;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            text-transform: capitalize;
+            font-weight: bold;
+         }
+      }
+   }
+
+   #mainwrapper{
+      width: 95%;
+      display: flex;
+      align-self: center;
+
+      nav{
+         /*background: white;*/
+         padding: 10px 0 10px 0;
+         .titlenav{
+            padding: 8px;
+            background: $lblue;
+            color: white;
+            border-radius:10px 10px 0 0;
+            font-family: patua;
+            font-size: 1.2em;
+         }
+
+         ul{
+            background: white;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            border-left: 2px solid $lightgray;
+            border-right: 2px solid $lightgray;
+
+            li{
+               display: flex;
+            }
+         }
+
+         .footernav{
+            padding: 10px;
+            background: $lightgray;
+            color: white;
+            border-radius:0 0 10px 10px;
+            font-family: patua;
+
+            #logout{
+               background: $lgreen;
+               border: none;
+               color: #FFF;
+               outline: none;
+               width: 100%;
+               font-family: inherit;
+               padding: 5px;
+               border-radius:10px;
+            }
+         }
+
+         a{
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            padding: 3px;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            color: inherit;
+            &:hover{
+               color: $lblue;
+               border-left: 4px solid $lblue;
+            }
+         }
+
+         .ahere{
+            font-size: 24px !important;
+            color: $lblue !important;
+            border-left: 4px solid $lblue;
+         }
+      }
+
+      .bodywrapper{
+         padding: 10px 0 10px 0;
+         flex: 1 0 auto;
+         margin-left: 10px;
+         .wrapercanvas{
+
+            .headercanvas{
+               background: white;
+               border-radius: 10px;
+               padding: 5px;
+               color: $lblue;
+               .username{
+                  font-size: 2em;
+                  font-family: patua;
+               }
+            }
+
+            .menucanvas{
+               background: $slightgray;
+               display: flex;
+               justify-content: space-between;
+               font-family: patua;
+               color: $graystrong;
+               font-size: 13px;
+               padding: 10px;
+               border-radius:0 0 10px 10px;
+               border-top: 2px solid $lightgray;
+               a{
+                  color: inherit;
+                  text-decoration: none;
+                  margin: 0 4px;
+                  &:hover{
+                     color: $lblue;
+                  }
+               }
+            }
+
+            .bodycanvas{
+               margin-top: 10px;
+               padding: 5px;
+               background: white;
+               border-radius: 10px;
+               border: 2px solid $lightgray;
+            }
+         }
+      }
+   }
+
+   footer{
+      padding: 10px;
+      background: $sblue;
+      color:white;
+      display: flex;
+      justify-content: center;
+   }
+}

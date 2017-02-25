@@ -1,0 +1,40 @@
+input[type="checkbox"], input[type="radio"] { visibility: hidden; display: none; }
+
+._form { padding: 10px; display: flex; flex-direction: column; width: 100%; }
+._form > ._title { font-size: 1.5em; }
+._form > ._content { padding: 25px 10px 0px 10px; display: flex; flex-direction: column; background: #f5f5f5; }
+._form > ._content > .w_section { display: flex; flex-direction: row; margin-bottom: 30px; }
+._form > ._content > .w_section > ._ssection { flex: 1 0 auto; border: 1px solid #939393; position: relative; padding: 20px 10px 10px 10px; margin-right: 10px; background: #FFF; }
+._form > ._content > .w_section > ._ssection > ._title { position: absolute; background: white; color: #263238; padding: 5px; font-size: 12px; text-transform: uppercase; top: -15px; left: 10px; }
+._form > ._content > .w_section > ._ssection > ._content { display: flex; flex-direction: column; }
+._form > ._content > .w_section > ._ssection > ._content .col3 { width: 33.3333%; }
+._form > ._content > .w_section > ._ssection > ._content .col2 { width: 50%; }
+._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt { margin-bottom: 3px; display: flex; }
+._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt .container_ipts { width: 100%; display: flex; }
+._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt .container_ipts > input[type="text"], ._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt .container_ipts input[type="password"], ._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt .container_ipts input[type="date"], ._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt .container_ipts textarea, ._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt .container_ipts select { flex: 1 0 auto !important; padding: 3px !important; }
+._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt > label { color: #939393; flex: 1 0 30%; overflow: hidden; text-align: right; padding-right: 10px; }
+._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt > input[type="text"], ._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt input[type="password"], ._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt input[type="date"], ._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt textarea, ._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt select, ._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt .btnform { flex: 2 0 70%; padding: 3px; font-family: roboto; }
+._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt > textarea { resize: vertical; }
+._form > ._content > .w_section > ._ssection > ._content > .v_wrappipt:last-child { margin-bottom: 0px; }
+._form > ._content > .w_section > ._ssection > ._content #tartsjoinprovs, ._form > ._content > .w_section > ._ssection > ._content #tproviders, ._form > ._content > .w_section > ._ssection > ._content #tdistt1 { border-collapse: collapse; margin: 0 auto; border: 1px solid #939393; }
+._form > ._content > .w_section > ._ssection > ._content #tartsjoinprovs tr > td, ._form > ._content > .w_section > ._ssection > ._content #tartsjoinprovs tr > th, ._form > ._content > .w_section > ._ssection > ._content #tproviders tr > td, ._form > ._content > .w_section > ._ssection > ._content #tproviders tr > th, ._form > ._content > .w_section > ._ssection > ._content #tdistt1 tr > td, ._form > ._content > .w_section > ._ssection > ._content #tdistt1 tr > th { max-width: 120px; font-size: 12px; }
+._form > ._content > .w_section > ._ssection > ._content #tartsjoinprovs tr > th, ._form > ._content > .w_section > ._ssection > ._content #tproviders tr > th, ._form > ._content > .w_section > ._ssection > ._content #tdistt1 tr > th { color: white !important; background: #263238; }
+._form > ._content > .w_section > ._ssection > ._content #tartsjoinprovs input, ._form > ._content > .w_section > ._ssection > ._content #tproviders input, ._form > ._content > .w_section > ._ssection > ._content #tdistt1 input { max-width: 100%; padding: 3px; border: none; }
+._form > ._content > .w_section > ._ssection .addart { margin-top: 5px; font-size: 18px; padding: 5px; }
+._form > ._content > .w_section > ._ssection > .h_content { display: flex; flex-direction: row; }
+._form > ._content > .w_section > ._ssection > .h_content .col3 { width: 33.3333%; }
+._form > ._content > .w_section > ._ssection > .h_content .col2 { width: 50%; }
+._form > ._content > .w_section > ._ssection > .h_content ._wrappipt > label { display: block; width: 100%; text-align: center; color: #939393; }
+._form > ._content > .w_section > ._ssection > .h_content ._wrappipt > input[type="text"], ._form > ._content > .w_section > ._ssection > .h_content ._wrappipt input[type="password"], ._form > ._content > .w_section > ._ssection > .h_content ._wrappipt input[type="date"], ._form > ._content > .w_section > ._ssection > .h_content ._wrappipt textarea, ._form > ._content > .w_section > ._ssection > .h_content ._wrappipt select, ._form > ._content > .w_section > ._ssection > .h_content ._wrappipt .btnform { width: 100%; padding: 3px; font-family: roboto; margin: 3px; }
+._form > ._content > .w_section > ._ssection > .h_content ._wrappipt > textarea { resize: vertical; }
+._form > ._content > .w_section > ._ssection:last-child { margin: 0px; }
+._form > ._content > ._botonera { display: flex; flex-direction: row; }
+._form > ._content > ._botonera button { flex: 1 0 auto; padding: 5px; font-size: 1.2em; }
+._form .lab_radio, ._form .lab_check { height: 100%; width: 100%; font-size: 18px; }
+._form .lab_radio:hover, ._form .lab_check:hover { cursor: pointer; }
+._form .ischeck { color: #2D92D0 !important; }
+._form .lab_initrow { text-align: right; padding-right: 10px; width: 100%; }
+
+.formtowrite { display: none; }
+
+/*# sourceMappingURL=fv2.css.map */

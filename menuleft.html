@@ -1,0 +1,55 @@
+<style>
+   .mainmenu, .submenu {
+     padding: 0;
+     margin: 0;
+   }
+
+   .mainmenu a {
+     text-decoration: none;  
+   }
+
+   .mainmenu li:hover .submenu {
+     max-height: 200px;
+     display: inline-table;
+   }
+
+   .submenu {
+     overflow: hidden;
+     max-height: 0;
+     -webkit-transition: all 0.5s ease-out;
+   }
+</style>
+
+<div class="titlenav">
+   <i class="fa fa-bars"></i> Menu
+</div>
+<ul class="mainmenu">
+
+   <li><a href="jerarquias.php">Jerarquias</a></li>
+   <li><a href="estados.php">Estados/Ciudades</a></li>
+   <li><a href="ciudades.php">Municipios/Delegaciones</a></li>
+   <li><a href="alta_proveedor.php">Proveedor</a></li>
+   <li><a href="codigos_transacciones.php">Codigos de transacciones</a></li>
+   <li><a href="tiendas_centros_dist.php">Tiendas y Centros de Distribucion</a></li>
+   <li><a href="alta_articulos.php">Articulos</a></li>
+   <li><a href="alta_ubicaciones.php">Ubicaciones</a></li>
+   <li><a href="alta_ordendecompra.php">Orden de Compra</a></li>
+   <li><a href="citas_recibo.php">Citas y Recibo</a></li>
+   <li><a href="transferencias.php">Transferencias</a></li>
+   <li><a href="dist_pedidos.php">Distribucion de Pedidos</a></li>
+   <li><a href="surtido.php">Surtido</a></li>
+   <li><a href="embarque_mercancia.php">Embarque de Mercancia</a></li>
+
+   <li><a href="#">Ventas</a>
+      <ul class="submenu">
+        <li><a href="../punto_de_venta/saldo.php">Punto de venta</a></li>
+      </ul>
+   </li>
+   <!--<li><a href="liga_articulos_proveedor.php">Liga de Articulos proveedor</a></li>-->
+
+
+
+</ul>        
+<div class="footernav">
+   <button id="logout" type="button" name="button"><i class="fa fa-sign-out"></i> Salir</button>
+</div>

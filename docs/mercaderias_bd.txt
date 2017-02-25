@@ -1,0 +1,1041 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+
+-- -----------------------------------------------------
+-- Table `departamento`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `departamento` (
+  `id_dept` INT NOT NULL ,
+  `descripcion` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`id_dept`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `clase`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `clase` (
+  `id_dept` INT NOT NULL ,
+  `id_clase` INT NOT NULL ,
+  `descripcion` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`id_dept`, `id_clase`) ,
+  INDEX `clase_dept_fk1_idx` (`id_dept` ASC) ,
+  CONSTRAINT `clase_dept_fk1`
+    FOREIGN KEY (`id_dept` )
+    REFERENCES `departamento` (`id_dept` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `subclase`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `subclase` (
+  `id_dept` INT NOT NULL ,
+  `id_clase` INT NOT NULL ,
+  `id_subclase` INT NOT NULL ,
+  `descripcion` VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`id_dept`, `id_clase`, `id_subclase`) ,
+  UNIQUE INDEX `id_dept_UNIQUE` (`id_dept` ASC) ,
+  UNIQUE INDEX `id_clase_UNIQUE` (`id_clase` ASC) ,
+  UNIQUE INDEX `id_subclase_UNIQUE` (`id_subclase` ASC) ,
+  INDEX `sub_dept_fk1_idx` (`id_dept` ASC, `id_clase` ASC) ,
+  CONSTRAINT `sub_dept_fk1`
+    FOREIGN KEY (`id_dept` , `id_clase` )
+    REFERENCES `clase` (`id_dept` , `id_clase` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `articulo`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `articulo` (
+  `sku` INT NOT NULL ,
+  `desc_larga` VARCHAR(100) NOT NULL COMMENT 'sku\\nDesc_larga\\nDesc_corta\\nid_dept\\nid_clase\\nid_subclase\\nzona_precio\\nUnidad_medida\\nvendible\\nPrimer_recibo \\nultimo_recibo \\n' ,
+  `desc_corta` VARCHAR(50) NULL ,
+  `id_dept` INT NULL ,
+  `id_clase` INT NULL ,
+  `id_subclase` INT NULL ,
+  `zona_precio` INT NULL ,
+  `unidad_medida` INT NULL ,
+  `vendible` VARCHAR(1) NULL ,
+  PRIMARY KEY (`sku`, `desc_larga`) ,
+  UNIQUE INDEX `sku_UNIQUE` (`sku` ASC) ,
+  INDEX `a_dept_fk1_idx` (`id_dept` ASC) ,
+  INDEX `a_clase_fk1_idx` (`id_dept` ASC, `id_clase` ASC) ,
+  INDEX `a_sub_fk1_idx` (`id_dept` ASC, `id_clase` ASC, `id_subclase` ASC) ,
+  CONSTRAINT `a_dept_fk1`
+    FOREIGN KEY (`id_dept` )
+    REFERENCES `departamento` (`id_dept` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `a_clase_fk1`
+    FOREIGN KEY (`id_dept` , `id_clase` )
+    REFERENCES `clase` (`id_dept` , `id_clase` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `a_sub_fk1`
+    FOREIGN KEY (`id_dept` , `id_clase` , `id_subclase` )
+    REFERENCES `subclase` (`id_dept` , `id_clase` , `id_subclase` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `estado`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `estado` (
+  `id_estado` VARCHAR(6) NOT NULL ,
+  `descripcion` VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`id_estado`, `descripcion`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ciudad`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `ciudad` (
+  `id_ciudad` VARCHAR(6) NOT NULL ,
+  `descripcion` VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`id_ciudad`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `proveedor`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `proveedor` (
+  `id_proveedor` INT NOT NULL COMMENT 'id_proveedor\\nnombre\\ncontacto\\ntelefono\\nemail\\nestatus\\nmoneda\\nimpuesto\\nDireccion\\nEstado\\nMunicipio\\n' ,
+  `nombre` VARCHAR(100) NULL ,
+  `contacto` VARCHAR(50) NULL ,
+  `telefono` VARCHAR(50) NULL ,
+  `email` VARCHAR(45) NULL ,
+  `estatus` VARCHAR(1) NULL ,
+  `moneda` VARCHAR(4) NULL ,
+  `impuesto` INT NULL ,
+  `direccion` VARCHAR(100) NULL ,
+  `id_estado` VARCHAR(6) NULL ,
+  `id_ciudad` VARCHAR(6) NULL ,
+  `proveedorcol` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id_proveedor`) ,
+  UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC) ,
+  UNIQUE INDEX `id_proveedor_UNIQUE` (`id_proveedor` ASC) ,
+  INDEX `p_estado_fk_idx` (`id_estado` ASC) ,
+  INDEX `p_ciudad_fk1_idx` (`id_ciudad` ASC) ,
+  CONSTRAINT `p_estado_fk`
+    FOREIGN KEY (`id_estado` )
+    REFERENCES `estado` (`id_estado` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `p_ciudad_fk1`
+    FOREIGN KEY (`id_ciudad` )
+    REFERENCES `ciudad` (`id_ciudad` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `upc`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `upc` (
+  `sku` INT NOT NULL ,
+  `upc` VARCHAR(15) NOT NULL COMMENT '\\nsku \\nupc \\nprimario \\ntipo_upc\\n' ,
+  `primario` VARCHAR(1) NULL ,
+  `tipo_upc` VARCHAR(10) NULL ,
+  PRIMARY KEY (`upc`, `sku`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `articulo_proveedor`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `articulo_proveedor` (
+  `id_proveedor` INT NOT NULL COMMENT 'sku\\nid_proveedor\\ncosto\\nprimario\\npais_origen\\ntiempo_llegada\\ninner_pack\\ncase_pack\\npallet_size\\nLargo_caja\\nancho_caja\\nprofundo_caja\\npeso_caja\\n' ,
+  `sku` INT NOT NULL ,
+  `costo` DECIMAL(10,4) NOT NULL ,
+  `primario` VARCHAR(1) NOT NULL ,
+  `pais_origen` VARCHAR(6) NOT NULL ,
+  `tiempo_llegada` INT NULL ,
+  `inner_pack` INT NOT NULL ,
+  `case_pack` INT NOT NULL ,
+  `pallet_size` INT NULL ,
+  `Largo_caja` DECIMAL(10,4) NULL ,
+  `ancho_caja` DECIMAL(10,4) NULL ,
+  `profundo_caja` DECIMAL(10,4) NULL ,
+  `peso_caja` DECIMAL(10,4) NULL ,
+  PRIMARY KEY (`id_proveedor`, `sku`, `pais_origen`) ,
+  INDEX `ap_aprov_fk1_idx` (`sku` ASC) ,
+  INDEX `ap_aprov_fk2_idx` (`id_proveedor` ASC) ,
+  CONSTRAINT `ap_aprov_fk1`
+    FOREIGN KEY (`sku` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ap_aprov_fk2`
+    FOREIGN KEY (`id_proveedor` )
+    REFERENCES `proveedor` (`id_proveedor` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tienda`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `tienda` (
+  `tienda` INT NOT NULL COMMENT 'id_tienda\\nnombre \\ndireccion \\nresponsable\\nregion \\nid_ciudad\\nestado \\npais\\nfecha_apertura\\nfecha_cierre\\ncodigo_postal\\ntipo_tienda\\nimpuesto\\nid_cd\\nMoneda\\n' ,
+  `nombre` VARCHAR(100) NOT NULL ,
+  `direccion` VARCHAR(100) NOT NULL ,
+  `responsable` VARCHAR(50) NULL ,
+  `region` INT NULL ,
+  `id_ciudad` VARCHAR(6) NOT NULL ,
+  `id_estado` VARCHAR(6) NOT NULL ,
+  `fecha_apertura` DATETIME NULL ,
+  `fecha_cierre` DATETIME NULL ,
+  `codigo_postal` VARCHAR(10) NULL ,
+  `tipo_tienda` VARCHAR(10) NULL ,
+  `impuesto` INT NULL ,
+  `id_cd` INT NULL ,
+  `moneda` VARCHAR(10) NULL ,
+  `tienda_cd` VARCHAR(10) NOT NULL ,
+  PRIMARY KEY (`tienda`, `tienda_cd`) ,
+  INDEX `t_estado_fk1_idx` (`id_ciudad` ASC) ,
+  INDEX `t_ciudad_fk2_idx` (`id_estado` ASC) ,
+  CONSTRAINT `t_estado_fk1`
+    FOREIGN KEY (`id_ciudad` )
+    REFERENCES `ciudad` (`id_ciudad` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `t_ciudad_fk2`
+    FOREIGN KEY (`id_estado` )
+    REFERENCES `estado` (`id_estado` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `inv_tienda`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `inv_tienda` (
+  `tienda` INT NOT NULL COMMENT 'id_tienda \\nsku\\nproveedor\\ncosto_unitario\\ncosto_promedio\\nprecio_venta\\ninventario \\ntransito\\nreservado\\nesperado\\nvendible\\nestatus\\nfecha_creacion\\n' ,
+  `sku` INT NOT NULL ,
+  `proveedor` INT NOT NULL ,
+  `costo_unitario` DECIMAL(10,4) NOT NULL ,
+  `costo_promedio` DECIMAL(10,4) NOT NULL ,
+  `precio_venta` DECIMAL(10,4) NOT NULL ,
+  `inventario` DECIMAL(10,4) NOT NULL ,
+  `transito` DECIMAL(10,4) NOT NULL ,
+  `reservado` DECIMAL(10,4) NOT NULL ,
+  `esperado` DECIMAL(10,4) NOT NULL ,
+  `vendible` VARCHAR(1) NULL ,
+  `estatus` VARCHAR(1) NOT NULL ,
+  `fecha_creacion` DATE NOT NULL ,
+  PRIMARY KEY (`tienda`, `sku`) ,
+  INDEX `inv_tda_fk1_idx` (`tienda` ASC) ,
+  INDEX `inv_sku_fk1_idx` (`sku` ASC) ,
+  INDEX `inv_prov_fk1_idx` (`proveedor` ASC) ,
+  CONSTRAINT `inv_tda_fk1`
+    FOREIGN KEY (`tienda` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `inv_sku_fk1`
+    FOREIGN KEY (`sku` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `inv_prov_fk1`
+    FOREIGN KEY (`proveedor` )
+    REFERENCES `proveedor` (`id_proveedor` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `inv_cd`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `inv_cd` (
+  `cd` INT NOT NULL COMMENT 'id_tienda \\nsku\\nproveedor\\ncosto_unitario\\ncosto_promedio\\nprecio_venta\\ninventario \\ntransito\\nreservado\\nesperado\\nvendible\\nestatus\\nfecha_creacion\\n' ,
+  `sku` INT NOT NULL ,
+  `proveedor` INT NOT NULL ,
+  `costo_unitario` DECIMAL(10,4) NOT NULL ,
+  `costo_promedio` DECIMAL(10,4) NOT NULL ,
+  `precio_venta` DECIMAL(10,4) NOT NULL ,
+  `inventario` DECIMAL(10,4) NOT NULL ,
+  `transito` DECIMAL(10,4) NOT NULL ,
+  `reservado` DECIMAL(10,4) NOT NULL ,
+  `esperado` DECIMAL(10,4) NOT NULL ,
+  `vendible` VARCHAR(1) NULL ,
+  `estatus` VARCHAR(1) NOT NULL ,
+  `fecha_creacion` DATE NOT NULL ,
+  PRIMARY KEY (`cd`, `sku`) ,
+  INDEX `invcd_sku_fk1_idx` (`sku` ASC) ,
+  INDEX `invcd_cd_fk1_idx1` (`proveedor` ASC) ,
+  INDEX `invcd_prov_fk3_idx` (`cd` ASC) ,
+  CONSTRAINT `invcd_sku_fk2`
+    FOREIGN KEY (`sku` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `invcd_prov_fk3`
+    FOREIGN KEY (`proveedor` )
+    REFERENCES `proveedor` (`id_proveedor` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `invcd_prov_fk3`
+    FOREIGN KEY (`cd` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `codigo`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `codigo` (
+  `id_codigo` INT NOT NULL COMMENT 'id_codigo\\ndescripcion \\nactivo \\n' ,
+  `descricpion` VARCHAR(50) NOT NULL ,
+  `activo` VARCHAR(1) NULL ,
+  PRIMARY KEY (`id_codigo`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `orden`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `orden` (
+  `id_orden` INT NOT NULL COMMENT 'id_orden\\nid_dept\\nid_proveedor\\nfecha_creacion \\nusuario_creacion \\nfecha_inicial_entrega\\nfecha_final_entrega\\nfecha_cierre\\ntermino_pago\\nestatus\\nfecha_aprobacion \\nusuario_aprobacion \\nMoneda\\ntipo_orden \\n' ,
+  `id_dept` INT NULL ,
+  `id_proveedor` INT NOT NULL ,
+  `fecha_ini_entrega` DATETIME NULL ,
+  `fecha_fin_entrega` DATETIME NULL ,
+  `fecha_creacion` DATETIME NOT NULL ,
+  `usuario_creacion` VARCHAR(20) NOT NULL ,
+  `fecha_cierre` DATETIME NULL ,
+  `termino_pago` VARCHAR(10) NULL ,
+  `estatus` VARCHAR(6) NOT NULL ,
+  `fecha_aprobacion` DATETIME NULL ,
+  `usuario_aprobacion` VARCHAR(20) NULL ,
+  `moneda` VARCHAR(10) NULL ,
+  `tipo_orden` VARCHAR(10) NULL ,
+  `ordencol` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id_orden`) ,
+  INDEX `ord_prov_fk1_idx` (`id_orden` ASC) ,
+  CONSTRAINT `ord_prov_fk1`
+    FOREIGN KEY (`id_orden` )
+    REFERENCES `proveedor` (`id_proveedor` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `orden_detalle`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `orden_detalle` (
+  `id_orden` INT NOT NULL COMMENT 'id_orden\\nsku \\ndestino\\nprecio\\ncantidad_ordenada\\ncantidad_original\\ncantidad_recibida \\ncantidad_cancelada\\ncodigo_cancelacion\\nfecha_cancelacion\\nusuario_cancelacion\\n' ,
+  `sku` INT NOT NULL ,
+  `id_proveedor` INT NOT NULL ,
+  `destino` INT NOT NULL ,
+  `costo` DECIMAL(10,4) NOT NULL ,
+  `cantidad_recibida` DECIMAL(10,4) NULL ,
+  `cantidad_ordenada` DECIMAL(10,4) NOT NULL ,
+  `cantidad_original` DECIMAL(10,4) NULL ,
+  `cantidad_cancelada` DECIMAL(10,4) NULL ,
+  `fecha_cancelacion` DECIMAL(10,4) NULL ,
+  `codigo_cancelacion` DECIMAL(10,4) NULL ,
+  `usuario_cancelacion` VARCHAR(20) NULL ,
+  PRIMARY KEY (`id_orden`, `sku`) ,
+  INDEX `ordet_artprov_fk1_idx` (`sku` ASC, `id_proveedor` ASC) ,
+  INDEX `ordet_dest_fk1_idx` (`destino` ASC) ,
+  INDEX `ordet_ord_fk1_idx` (`id_orden` ASC) ,
+  CONSTRAINT `ordet_artprov_fk1`
+    FOREIGN KEY (`sku` , `id_proveedor` )
+    REFERENCES `articulo_proveedor` (`sku` , `id_proveedor` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `ordet_dest_fk1`
+    FOREIGN KEY (`destino` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE NO ACTION
+    ON UPDATE RESTRICT,
+  CONSTRAINT `ordet_ord_fk1`
+    FOREIGN KEY (`id_orden` )
+    REFERENCES `orden` (`id_orden` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `transferencia`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `transferencia` (
+  `id_transfer` INT NOT NULL COMMENT 'transferencia\\nid_transfer\\norig_tipo_destino\\norig_destino\\ndest_tipo_destino\\ndest_destino\\ntipo\\nestatus\\nfecha_creacion \\nusuario_creacion \\nfecha_aprobacion \\nusuario_aprobacion \\nFecha_cierre\\n' ,
+  `orig_tda_cd` INT NOT NULL ,
+  `dest_tda_cd` INT NOT NULL ,
+  `tipo` VARCHAR(3) NULL ,
+  `estatus` VARCHAR(2) NOT NULL ,
+  `fecha_creacion` DATETIME NULL ,
+  `usuario_creacion` VARCHAR(20) NULL ,
+  `fecha_aprobacion` DATETIME NULL ,
+  `usuario_aprobacion` VARCHAR(20) NULL ,
+  `fecha_cierre` DATETIME NULL ,
+  `transferenciacol` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id_transfer`) ,
+  INDEX `t_destino_fk1_idx` (`orig_tda_cd` ASC) ,
+  INDEX `t_origen_fk1_idx` (`dest_tda_cd` ASC) ,
+  CONSTRAINT `t_destino_fk1`
+    FOREIGN KEY (`orig_tda_cd` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `t_origen_fk1`
+    FOREIGN KEY (`dest_tda_cd` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `embarque`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `embarque` (
+  `id_embarque` INT NOT NULL COMMENT 'id_embarque\\nid_orden\\nid_transfer\\nfecha_embarque\\nfecha_recibo\\npago\\ndestino\\ntipo_ubicacion\\nfecha_pago\\nestatus\\nestatus_pago\\n' ,
+  `id_orden` INT NOT NULL ,
+  `id_transfer` INT NOT NULL ,
+  `fecha_embarque` DATETIME NULL ,
+  `fecha_recibo` DATETIME NULL ,
+  `fecha_pago` DATETIME NULL ,
+  `pago` INT NULL ,
+  `destino` INT NOT NULL ,
+  `estatus` VARCHAR(1) NULL ,
+  `estatus_pago` VARCHAR(10) NULL ,
+  `embarquecol` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id_embarque`) ,
+  INDEX `emb_orde_fk1_idx` (`id_orden` ASC) ,
+  INDEX `emb_trans_fk2_idx` (`id_transfer` ASC) ,
+  INDEX `emb_dest_fk3_idx` (`destino` ASC) ,
+  CONSTRAINT `emb_orden_fk1`
+    FOREIGN KEY (`id_orden` )
+    REFERENCES `orden` (`id_orden` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `emb_trans_fk2`
+    FOREIGN KEY (`id_transfer` )
+    REFERENCES `transferencia` (`id_transfer` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `emb_dest_fk3`
+    FOREIGN KEY (`destino` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `embarque_detalle`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `embarque_detalle` (
+  `id_embarque` INT NOT NULL COMMENT 'id_embarque\\nsku\\nupc\\ncontenedor\\ncantidad_esperada\\ncantidad_recibida\\ncosto_unitario\\nprecio\\n' ,
+  `sku` INT NOT NULL ,
+  `upc` VARCHAR(20) NULL ,
+  `contenedor` VARCHAR(20) NOT NULL ,
+  `cantidad_esperada` DECIMAL(10,4) NOT NULL ,
+  `cantidad_recibida` DECIMAL(10,4) NOT NULL ,
+  `costo_unitario` DECIMAL(10,4) NULL ,
+  `precio` DECIMAL(10,4) NULL ,
+  PRIMARY KEY (`id_embarque`, `sku`, `contenedor`) ,
+  INDEX `emd_embar_fk1_idx` (`id_embarque` ASC) ,
+  INDEX `emd_sku_fk1_idx` (`sku` ASC) ,
+  CONSTRAINT `emd_embar_fk1`
+    FOREIGN KEY (`id_embarque` )
+    REFERENCES `embarque` (`id_embarque` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `emd_sku_fk1`
+    FOREIGN KEY (`sku` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `transfer_detalle`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `transfer_detalle` (
+  `id_transfer` INT NOT NULL COMMENT 'id_transfer\\nsku\\ncontenedor\\ncantidad_trans\\ncantidad_embarcada\\ncantidad_recibida\\ninner_pack\\n' ,
+  `sku` INT NOT NULL ,
+  `contenedor` VARCHAR(20) NULL ,
+  `cantidad_trans` DECIMAL(20) NULL ,
+  `cantidad_embarcada` DECIMAL(20) NULL ,
+  `cantidad_recibida` DECIMAL(20) NULL ,
+  `inner_pack` INT NULL ,
+  `transfer_detallecol` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id_transfer`, `sku`) ,
+  INDEX `td_sku_fk1_idx` (`id_transfer` ASC) ,
+  INDEX `td_trans_fk2_idx` (`id_transfer` ASC) ,
+  CONSTRAINT `td_sku_fk1`
+    FOREIGN KEY (`id_transfer` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `td_trans_fk2`
+    FOREIGN KEY (`id_transfer` )
+    REFERENCES `transferencia` (`id_transfer` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `envio`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `envio` (
+  `id_envio` INT NOT NULL COMMENT 'envio\\nid_envio\\ntipo_origen\\norigen \\ntipo_destino\\ndestino \\nfecha_creacion \\nusuario\\n' ,
+  `origen` INT NOT NULL ,
+  `destino` INT NOT NULL ,
+  `fecha_creacion` DATETIME NOT NULL ,
+  `usuario` VARCHAR(20) NULL ,
+  PRIMARY KEY (`id_envio`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `envio_detalle`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `envio_detalle` (
+  `id_envio` INT NOT NULL COMMENT 'envio_detalle\\nid_envio\\nsku \\nid_transfer\\npiezas_emb\\n' ,
+  `sku` INT NOT NULL ,
+  `id_embarque` INT NOT NULL ,
+  `piezas_emb` INT NULL ,
+  PRIMARY KEY (`id_envio`, `sku`, `id_embarque`) ,
+  INDEX `env_envio_fk1_idx` (`id_envio` ASC) ,
+  INDEX `env_sku_fk2_idx` (`sku` ASC) ,
+  INDEX `env_emba_fk3_idx` (`id_embarque` ASC) ,
+  CONSTRAINT `env_envio_fk1`
+    FOREIGN KEY (`id_envio` )
+    REFERENCES `envio` (`id_envio` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `env_sku_fk2`
+    FOREIGN KEY (`sku` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `env_emba_fk3`
+    FOREIGN KEY (`id_embarque` )
+    REFERENCES `embarque` (`id_embarque` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `transaccional`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `transaccional` (
+  `sku` INT NOT NULL COMMENT 'transaccional\\nsku\\nid_dept\\nid_clase\\nid_sub\\ntienda\\ncd\\nfecha_tran\\ncodigo_tran\\npiezas\\ncosto_total\\nprecio_total\\nref_1\\nref_2\\nprograma\\nusuario_creo\\nfecha_carga\\n' ,
+  `id_dept` INT NOT NULL ,
+  `id_clase` INT NOT NULL ,
+  `id_subclase` INT NOT NULL ,
+  `tienda` INT NOT NULL ,
+  `cd` INT NOT NULL ,
+  `fecha_tran` DATETIME NOT NULL ,
+  `codigo_tran` INT NOT NULL ,
+  `piezas` DECIMAL(10,4) NOT NULL ,
+  `costo_total` DECIMAL(10,4) NOT NULL ,
+  `precio_total` DECIMAL(10,4) NOT NULL ,
+  `ref_1` VARCHAR(20) NULL ,
+  `ref_2` VARCHAR(20) NULL ,
+  `programa` VARCHAR(50) NOT NULL ,
+  `usuario` VARCHAR(20) NULL ,
+  `fecha_carga` DATETIME NOT NULL ,
+  UNIQUE INDEX `sku_UNIQUE` (`sku` ASC) ,
+  UNIQUE INDEX `tienda_UNIQUE` (`tienda` ASC) ,
+  UNIQUE INDEX `cd_UNIQUE` (`cd` ASC) ,
+  UNIQUE INDEX `fecha_tran_UNIQUE` (`fecha_tran` ASC) ,
+  UNIQUE INDEX `codigo_tran_UNIQUE` (`codigo_tran` ASC) ,
+  INDEX `tran_sku_fk1_idx` (`sku` ASC) ,
+  INDEX `tran_subcla_fk2_idx` (`id_dept` ASC, `id_clase` ASC, `id_subclase` ASC) ,
+  INDEX `tran_trans_fk1_idx` (`codigo_tran` ASC) ,
+  INDEX `tran_tda_fk1_idx` (`tienda` ASC) ,
+  INDEX `tran_cd_fk5_idx` (`cd` ASC) ,
+  CONSTRAINT `tran_sku_fk1`
+    FOREIGN KEY (`sku` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `tran_subcla_fk2`
+    FOREIGN KEY (`id_dept` , `id_clase` , `id_subclase` )
+    REFERENCES `subclase` (`id_dept` , `id_clase` , `id_subclase` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `tran_trans_fk3`
+    FOREIGN KEY (`codigo_tran` )
+    REFERENCES `codigo` (`id_codigo` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `tran_tda_fk4`
+    FOREIGN KEY (`tienda` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `tran_cd_fk5`
+    FOREIGN KEY (`cd` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `orden_cd`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `orden_cd` (
+  `id_cd` INT NOT NULL ,
+  `id_orden` INT NOT NULL COMMENT 'id_orden\\nid_dept\\nid_proveedor\\nfecha_creacion \\nusuario_creacion \\nfecha_inicial_entrega\\nfecha_final_entrega\\nfecha_cierre\\ntermino_pago\\nestatus\\nfecha_aprobacion \\nusuario_aprobacion \\nMoneda\\ntipo_orden \\n' ,
+  `id_dept` INT NULL ,
+  `id_proveedor` INT NOT NULL ,
+  `fecha_ini_entrega` DATETIME NULL ,
+  `fecha_fin_entrega` DATETIME NULL ,
+  `fecha_creacion` DATETIME NULL ,
+  `usuario_creacion` INT NULL ,
+  `fecha_carga` DATETIME NULL ,
+  `estatus` VARCHAR(6) NOT NULL ,
+  PRIMARY KEY (`id_orden`, `id_cd`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `orden_detalle_cd`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `orden_detalle_cd` (
+  `id_cd` INT NOT NULL ,
+  `id_orden` INT NOT NULL COMMENT 'id_orden\\nsku \\ndestino\\nprecio\\ncantidad_ordenada\\ncantidad_original\\ncantidad_recibida \\ncantidad_cancelada\\ncodigo_cancelacion\\nfecha_cancelacion\\nusuario_cancelacion\\n' ,
+  `sku` INT NOT NULL ,
+  `destino` INT NOT NULL ,
+  `cantidad_ordenada` DECIMAL(10,4) NOT NULL ,
+  `fecha_carga` DATETIME NULL ,
+  `usuario_carga` VARCHAR(20) NULL ,
+  `inner_pack` INT NOT NULL ,
+  PRIMARY KEY (`id_orden`, `id_cd`, `sku`) ,
+  INDEX `ocd_sku_fk_idx` (`sku` ASC) ,
+  INDEX `ocd_orden_fk_idx` (`id_orden` ASC) ,
+  INDEX `ocd_dest_fk_idx` (`destino` ASC) ,
+  CONSTRAINT `ocd_sku_fk`
+    FOREIGN KEY (`sku` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `ocd_orden_fk`
+    FOREIGN KEY (`id_orden` )
+    REFERENCES `orden_cd` (`id_orden` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `ocd_dest_fk`
+    FOREIGN KEY (`destino` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cita`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `cita` (
+  `id_cd` INT NOT NULL COMMENT 'cita\\nid_cd\\nid_cita\\nfecha_creacion\\nusuario_creacion \\npuerta\\nestatus\\ninicio_cita\\nfin_cita\\ntrailer\\nchofer\\nimprimir_etiqueta\\n' ,
+  `id_cita` INT NOT NULL ,
+  `fecha_creacion` DATE NOT NULL ,
+  `usuario_creacion` VARCHAR(20) NOT NULL ,
+  `puerta` VARCHAR(10) NULL ,
+  `estatus` VARCHAR(6) NOT NULL ,
+  `inicio_cita` DATETIME NULL ,
+  `fin_cita` DATETIME NULL ,
+  `trailer` VARCHAR(20) NULL ,
+  `chofer` VARCHAR(50) NULL ,
+  `imprimir_etiqueta` VARCHAR(3) NOT NULL ,
+  PRIMARY KEY (`id_cd`, `id_cita`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `cita_detalle`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `cita_detalle` (
+  `id_cd` INT NOT NULL COMMENT 'cita_detalle\\nid_cd\\nid_cita\\nid_orden\\nsku\\ninner_pack\\ncantidad_pedida\\ncantidad_recibida \\ncajas_pedidas\\ncajas_recibidas \\n' ,
+  `id_cita` INT NOT NULL ,
+  `id_orden` INT NOT NULL ,
+  `sku` INT NOT NULL ,
+  `inner_pack` INT NOT NULL ,
+  `cantidad_pedida` DECIMAL(10,4) NOT NULL ,
+  `cantidad_recibida` DECIMAL(10,4) NULL ,
+  `cajas_pedidas` DECIMAL(10,4) NOT NULL ,
+  `cajas_recibidas` DECIMAL(10,4) NULL ,
+  PRIMARY KEY (`id_cd`, `id_cita`, `sku`) ,
+  INDEX `cta_cita_fk1_idx` (`id_cita` ASC, `id_cd` ASC) ,
+  INDEX `cta_orden_fk1_idx` (`id_cd` ASC, `id_cita` ASC) ,
+  INDEX `cta_sku_fk1_idx` (`sku` ASC) ,
+  CONSTRAINT `cta_cita_fk1`
+    FOREIGN KEY (`id_cita` , `id_cd` )
+    REFERENCES `cita` (`id_cita` , `id_cd` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `cta_orden_fk2`
+    FOREIGN KEY (`id_cd` , `id_cita` )
+    REFERENCES `orden_cd` (`id_cd` , `id_orden` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `cta_sku_fk1`
+    FOREIGN KEY (`sku` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `distribucion`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `distribucion` (
+  `id_cd` INT NOT NULL COMMENT 'id_cd\\nid_distribucion\\nfecha_inicio\\nfecha_fin\\ntipo_distribucion\\nid_orden\\ndescripcion\\nvalor_1\\nvalor_2\\nvalor_3\\nfecha_creacion\\nusuario_creacion\\n' ,
+  `id_distribucion` INT NOT NULL ,
+  `fecha_inicio` DATE NOT NULL ,
+  `fecha_fin` DATE NOT NULL ,
+  `tipo_distribucion` VARCHAR(10) NOT NULL ,
+  `id_orden` INT NULL ,
+  `descripcion` VARCHAR(50) NULL ,
+  `valor_1` VARCHAR(20) NULL ,
+  `valor_2` INT NULL ,
+  `valor_3` VARCHAR(20) NULL ,
+  `fecha_creacion` DATE NULL ,
+  `usuario_creacion` VARCHAR(20) NULL ,
+  PRIMARY KEY (`id_cd`, `id_distribucion`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `distribucion_detalle`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `distribucion_detalle` (
+  `id_cd` INT NOT NULL COMMENT 'id_cd\\nid_distribucion \\nsku\\ndestino\\nid_orden\\ndistribuido\\nid_asignacion\\nusuario_asignacio\\nfecha_asignacion\\ntipo_asignacion\\n' ,
+  `id_distribucion` INT NOT NULL ,
+  `sku` INT NOT NULL ,
+  `destino` INT NOT NULL ,
+  `id_orden` INT NULL ,
+  `pedido` DECIMAL(10,4) NOT NULL ,
+  `distribuido` DECIMAL(10,4) NOT NULL ,
+  `id_asignacion` INT NULL ,
+  `usuario_asignacion` VARCHAR(20) NULL ,
+  `fecha_asignacion` DATETIME NULL ,
+  `tipo_asignacion` VARCHAR(10) NULL ,
+  PRIMARY KEY (`id_cd`, `id_distribucion`, `sku`, `destino`) ,
+  INDEX `dist_dist_fk1_idx` (`id_cd` ASC, `id_distribucion` ASC) ,
+  INDEX `dist_sku_fk1_idx` (`sku` ASC) ,
+  INDEX `dist_dest_fk1_idx` (`destino` ASC) ,
+  CONSTRAINT `dist_dist_fk1`
+    FOREIGN KEY (`id_cd` , `id_distribucion` )
+    REFERENCES `distribucion` (`id_cd` , `id_distribucion` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `dist_sku_fk2`
+    FOREIGN KEY (`sku` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `dist_dest_fk3`
+    FOREIGN KEY (`destino` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ubicacion`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `ubicacion` (
+  `id_cd` INT NOT NULL ,
+  `ubicacion` VARCHAR(20) NOT NULL ,
+  `tipo` VARCHAR(20) NOT NULL ,
+  `fecha_creacion` DATETIME NOT NULL ,
+  `usuario_creacion` VARCHAR(20) NOT NULL ,
+  `multi_sku` INT NOT NULL ,
+  `estatus` VARCHAR(6) NOT NULL ,
+  `conteo_ciclico` VARCHAR(5) NULL ,
+  `fecha_conteo` DATETIME NULL ,
+  `usuario_conteo` VARCHAR(20) NULL ,
+  PRIMARY KEY (`id_cd`, `ubicacion`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `envio_cd`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `envio_cd` (
+  `id_cd` INT NOT NULL COMMENT 'id_cd\\nid_envio \\ndestino\\npuerta\\nusuario_envio\\nfecha_envio \\nfecha_carga\\nestatus\\nusuario_recibe\\ntransporte\\n' ,
+  `id_envio` INT NOT NULL ,
+  `destino` INT NOT NULL ,
+  `puerta` VARCHAR(20) NULL ,
+  `usuario_envio` VARCHAR(20) NULL ,
+  `fecha_envio` DATETIME NULL ,
+  `fecha_carga` DATETIME NULL ,
+  `estatus` VARCHAR(2) NULL ,
+  `usuario_recibe` VARCHAR(20) NULL ,
+  `fecha_recibe` DATETIME NULL ,
+  `transporte` VARCHAR(20) NULL ,
+  PRIMARY KEY (`id_cd`, `id_envio`, `destino`) ,
+  UNIQUE INDEX `estatus_UNIQUE` (`estatus` ASC) ,
+  UNIQUE INDEX `fecha_envio_UNIQUE` (`fecha_envio` ASC) ,
+  UNIQUE INDEX `usuario_envio_UNIQUE` (`usuario_envio` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `contenedor`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `contenedor` (
+  `id_cd` INT NOT NULL COMMENT 'contenedor\\nid_cd\\nid_contenedor\\nubicación \\nagrupado_contenedor\\nid_cita\\nid_orden\\nalto\\nancho\\nprofundo\\nusuario_recibo\\nfecha_recibo\\nestatus\\ndestino\\nenvio\\nsurtir_contenedor\\nid_asignacion\\nfecha_envio\\nsiguiente_ubicacion\\nfinal_ubicacion\\n' ,
+  `id_contenedor` VARCHAR(20) NOT NULL ,
+  `ubicacion` VARCHAR(20) NOT NULL ,
+  `agrupado_contenedor` VARCHAR(20) NULL ,
+  `id_cita` INT NULL ,
+  `id_orden` INT NULL ,
+  `alto` DECIMAL(10,4) NULL ,
+  `ancho` DECIMAL(10,4) NULL ,
+  `profundo` DECIMAL(10,4) NULL ,
+  `peso` DECIMAL(10,4) NULL ,
+  `usuario_recibo` VARCHAR(20) NOT NULL ,
+  `fecha_recibo` DATE NOT NULL ,
+  `estatus` VARCHAR(1) NOT NULL ,
+  `destino` INT NOT NULL ,
+  `id_envio` INT NULL ,
+  `surtir_contenedor` VARCHAR(20) NULL ,
+  `id_asignacion` INT NULL ,
+  `fecha_envio` DATE NULL ,
+  `siguiente_ubicacion` VARCHAR(20) NULL ,
+  `final_ubicacion` VARCHAR(20) NULL ,
+  `fecha_modificacion` DATETIME NULL ,
+  `usuario_mofificacion` VARCHAR(20) NULL ,
+  PRIMARY KEY (`id_cd`, `id_contenedor`) ,
+  INDEX `cont_ubic_fk1_idx` (`ubicacion` ASC, `siguiente_ubicacion` ASC, `final_ubicacion` ASC, `id_cd` ASC) ,
+  INDEX `cont_envio_fk1_idx` (`id_envio` ASC, `id_cd` ASC) ,
+  CONSTRAINT `cont_ubic_fk1`
+    FOREIGN KEY (`ubicacion` , `siguiente_ubicacion` , `final_ubicacion` , `id_cd` )
+    REFERENCES `ubicacion` (`ubicacion` , `ubicacion` , `ubicacion` , `id_cd` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `cont_envio_fk1`
+    FOREIGN KEY (`id_envio` , `id_cd` )
+    REFERENCES `envio_cd` (`id_envio` , `id_cd` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `assignacion`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `assignacion` (
+  `id_cd` INT NOT NULL COMMENT 'asignacion \\nid_cd\\nid_asignacion \\ndestino\\nid_distribucion\\nsurtido_contenedor\\nasignado_contenedor\\nsku\\npiezas\\ntipo\\nfecha_creacion\\norden_surtido\\nubicación \\n' ,
+  `id_asignacion` INT NOT NULL ,
+  `destino` INT NOT NULL ,
+  `id_distribucion` INT NOT NULL ,
+  `surtido_contenedor` VARCHAR(20) NOT NULL ,
+  `asignacion_contenedor` VARCHAR(20) NOT NULL ,
+  `sku` INT NOT NULL ,
+  `piezas` DECIMAL(10,4) NULL ,
+  `tipo` VARCHAR(4) NULL ,
+  `fecha_creacion` DATETIME NOT NULL ,
+  `orden_surtido` INT NOT NULL ,
+  `ubicacion_ini` VARCHAR(20) NULL ,
+  `ubicacion_fin` VARCHAR(20) NULL ,
+  PRIMARY KEY (`id_cd`, `id_asignacion`, `destino`, `id_distribucion`, `surtido_contenedor`, `sku`, `fecha_creacion`) ,
+  INDEX `asig_dest_fk1_idx` (`destino` ASC) ,
+  INDEX `asig_distr_fk2_idx` (`id_cd` ASC, `id_distribucion` ASC) ,
+  INDEX `asig_cont_fk3_idx` (`id_cd` ASC, `surtido_contenedor` ASC) ,
+  INDEX `asig_ubic_fk4_idx` (`id_cd` ASC, `ubicacion_ini` ASC, `ubicacion_fin` ASC) ,
+  CONSTRAINT `asig_dest_fk1`
+    FOREIGN KEY (`destino` )
+    REFERENCES `tienda` (`tienda` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `asig_distr_fk2`
+    FOREIGN KEY (`id_cd` , `id_distribucion` )
+    REFERENCES `distribucion` (`id_cd` , `id_distribucion` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `asig_cont_fk3`
+    FOREIGN KEY (`id_cd` , `surtido_contenedor` )
+    REFERENCES `contenedor` (`id_cd` , `id_contenedor` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `asig_ubic_fk4`
+    FOREIGN KEY (`id_cd` , `ubicacion_ini` , `ubicacion_fin` )
+    REFERENCES `ubicacion` (`id_cd` , `ubicacion` , `ubicacion` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `contenedor_detalle`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `contenedor_detalle` (
+  `id_cd` INT NOT NULL COMMENT 'id_cd\\nid_contenedor\\nsku\\nid_distribucion\\ncajas\\npiezas\\ndistribuido\\nconteo_pzas\\nusuario_conteo\\nfecha_conteo\\n' ,
+  `id_contenedor` VARCHAR(20) NOT NULL ,
+  `sku` INT NOT NULL ,
+  `id_distribucion` INT NOT NULL ,
+  `cajas` DECIMAL(10,4) NOT NULL ,
+  `piezas` DECIMAL(10,4) NOT NULL ,
+  `distribuido` DECIMAL(10,4) NOT NULL ,
+  `conteo_piezas` DECIMAL(10,4) NULL ,
+  `conteo_cajas` DECIMAL(10,4) NULL ,
+  `fecha_conteo` DATE NULL ,
+  `usuario_conteo` VARCHAR(20) NULL ,
+  PRIMARY KEY (`id_cd`, `id_contenedor`, `sku`, `id_distribucion`) ,
+  INDEX `cond_cont_fk1_idx` (`id_cd` ASC, `id_contenedor` ASC) ,
+  INDEX `cond_sku_fk2_idx` (`sku` ASC) ,
+  INDEX `cond_dist_fk3_idx` (`id_distribucion` ASC, `id_cd` ASC) ,
+  CONSTRAINT `cond_cont_fk1`
+    FOREIGN KEY (`id_cd` , `id_contenedor` )
+    REFERENCES `contenedor` (`id_cd` , `id_contenedor` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `cond_sku_fk2`
+    FOREIGN KEY (`sku` )
+    REFERENCES `articulo` (`sku` )
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT `cond_dist_fk3`
+    FOREIGN KEY (`id_distribucion` , `id_cd` )
+    REFERENCES `distribucion` (`id_distribucion` , `id_cd` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `contenedor_historia`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `contenedor_historia` (
+  `id_cd` INT NOT NULL COMMENT 'id_cd\\nid_contenedor\\nsku\\nid_distribucion\\ncajas\\npiezas\\ndistribuido\\nconteo_pzas\\nusuario_conteo\\nfecha_conteo\\naccion\\nfecha_modificacion\\nusuario_modificacion\\nubicación_inicial\\nubicacio_final\\n' ,
+  `id_contenedor` VARCHAR(20) NOT NULL ,
+  `sku` INT NULL ,
+  `id_distribucion` INT NULL ,
+  `cajas` DECIMAL(10,4) NULL ,
+  `piezas` DECIMAL(10,4) NULL ,
+  `distribuido` DECIMAL(10,4) NULL ,
+  `conteo_piezas` DECIMAL(10,4) NULL ,
+  `conteo_cajas` DECIMAL(10,4) NULL ,
+  `accion` VARCHAR(3) NOT NULL ,
+  `fecha_modificacion` DATETIME NOT NULL ,
+  `usuario_modificacion` VARCHAR(20) NOT NULL ,
+  `ubicacion_inicial` VARCHAR(20) NULL ,
+  `ubicacion_final` VARCHAR(20) NULL ,
+  PRIMARY KEY (`accion`, `fecha_modificacion`, `usuario_modificacion`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `venta`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `venta` (
+  `id_venta` INT NOT NULL ,
+  `tienda` INT NOT NULL ,
+  `ticket` VARCHAR(40) NOT NULL ,
+  `sku` INT NOT NULL ,
+  `upc` VARCHAR(20) NOT NULL ,
+  `fecha_venta` DATETIME NOT NULL ,
+  `cajero` VARCHAR(20) NOT NULL ,
+  `terminal` VARCHAR(30) NOT NULL ,
+  `piezas` DECIMAL(10,4) NOT NULL ,
+  `precio` DECIMAL(10,4) NOT NULL ,
+  `total` DECIMAL(10,4) NOT NULL ,
+  `forma_pago` VARCHAR(10) NOT NULL ,
+  `descuento` DECIMAL(10,4) NOT NULL ,
+  `usuario_cierre` VARCHAR(20) NULL ,
+  `fecha_cierre` DATETIME NULL ,
+  `fecha_carga` DATETIME NULL ,
+  `estatus` VARCHAR(4) NOT NULL ,
+  `estatus_existe` VARCHAR(4) NULL ,
+  `fecha_carga_inv` DATETIME NULL ,
+  `devolucion` VARCHAR(4) NULL ,
+  `razon_devolucion` VARCHAR(7) NULL ,
+  PRIMARY KEY (`id_venta`, `tienda`, `ticket`, `sku`, `upc`, `fecha_venta`, `cajero`, `terminal`) )
+ENGINE = InnoDB;
+
+
+ 
+CREATE TABLE `_sequence` (
+  `seq_name` varchar(50) NOT NULL,
+  `seq_val` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`seq_name`)
+) ENGINE=InnoDB;
+	
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+
+
+
+
+---- funcion para secuencias 
+
+ delimiter $$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `secuencia`( sSeqName varchar(50)) RETURNS int(11)
+BEGIN
+
+declare nLast_val INT;
+
+ select seq_val 
+into nLast_val
+from _sequence
+ where seq_name = sSeqName;
+    
+    if nLast_val is null then
+        set nLast_val = 1;
+        insert into _sequence (seq_name,seq_val) 
+        values (sSeqName,nLast_Val);
+    else
+        set nLast_val = nLast_val + 1;
+        update _sequence set seq_val = nLast_val 
+        where seq_name = sSeqName;
+    end if;
+
+
+RETURN nLast_val;
+END$$
+
+
+
+---- procedimiento para llamar funcion (ejemplo)
+ delimiter $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `new_procedure`()
+BEGIN
+declare l_sku int;
+set l_sku=mercaderias.secuencia('s_sku');
+
+insert into sku (sku) values (l_sku);
+
+END$$

@@ -1,0 +1,16 @@
+body{
+	background-color:rgb(236, 240, 241);
+}
+
+.btn-entrada{height:200px}
+
+.div_center{
+	background-color: #ffffff;
+	border-radius:25px;
+	margin-top: 40px;
+	padding:15px;
+}
+
+h3{text-align: center;}
+
+

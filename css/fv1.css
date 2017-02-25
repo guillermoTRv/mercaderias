@@ -1,0 +1,31 @@
+._form { width: 100%; display: flex; flex-direction: column; }
+._form > ._title { font-size: 1.5em; border-bottom: 1px solid #f5f5f5; }
+._form > ._content { display: flex; flex-direction: row; /*padding: 10px 0 0 10px;*/ }
+._form > ._content > ._section { flex: 1 0 auto; border-right: 1px solid #f5f5f5; border-bottom: 1px solid #f5f5f5; /*margin:0 10px 10px 0px;*/ display: flex; flex-direction: column; background: #FFF; /*border-radius: 3px;*/ }
+._form > ._content > ._section > ._title { font-size: 1.2em; padding: 3px; background: #f5f5f5; color: #263238; }
+._form > ._content > ._section > ._content { display: flex; }
+._form > ._content > ._section > ._content .col3 { width: 33.3333%; }
+._form > ._content > ._section > ._content .col2 { width: 50%; }
+._form > ._content > ._section > ._content .v_wrappipt { display: flex; flex-direction: column; flex: 1 0 auto; border: 1px solid #f5f5f5; }
+._form > ._content > ._section > ._content .v_wrappipt label { text-transform: uppercase; color: #939393; font-size: 10px; padding: 3px 3px 0 3px; font-weight: 600; width: 100%; }
+._form > ._content > ._section > ._content .v_wrappipt input, ._form > ._content > ._section > ._content .v_wrappipt textarea, ._form > ._content > ._section > ._content .v_wrappipt select { padding: 5px; background: none; border: none; outline: none; width: 100%; resize: vertical; font-family: roboto; }
+._form > ._content > ._section > ._content .v_wrappipt input:focus, ._form > ._content > ._section > ._content .v_wrappipt textarea:focus, ._form > ._content > ._section > ._content .v_wrappipt select:focus { background: #FFF; }
+._form > ._content > ._section > ._content .v_wrappipt .hhw { text-align: center; }
+._form > ._content > ._section > ._content .h_wrappipt { display: flex; flex-direction: row; flex: 1 0 auto; border: 1px solid #f5f5f5; }
+._form > ._content > ._section > ._content .h_wrappipt label { text-transform: uppercase; color: #939393; font-size: 10px; padding: 3px 3px 0 3px; font-weight: 600; width: 100%; }
+._form > ._content > ._section > ._content .h_wrappipt input, ._form > ._content > ._section > ._content .h_wrappipt textarea, ._form > ._content > ._section > ._content .h_wrappipt select { padding: 5px; background: none; border: none; outline: none; width: 100%; resize: vertical; font-family: roboto; }
+._form > ._content > ._section > ._content .h_wrappipt input:focus, ._form > ._content > ._section > ._content .h_wrappipt textarea:focus, ._form > ._content > ._section > ._content .h_wrappipt select:focus { background: #FFF; }
+._form > ._content > ._section > ._content .h_wrappipt .hhw { text-align: center; }
+._form > ._content > ._section > ._content .v_wrappipt:last-child { border-left: 0px; border-right: 0px; border-bottom: 0px; }
+._form > ._content > ._section > ._content .h_wrappipt { border-left: 0px; border-bottom: 0px; }
+._form > ._content > ._section > ._content .h_wrappipt:last-child { border-right: 0px; }
+._form > ._botonera { display: flex; }
+._form > ._botonera button { flex: 1 0 auto; padding: 5px; font-size: 20px; border: none; outline: none; color: #263238; background: white; cursor: pointer; }
+._form > ._botonera .btn_deft { border: 1px solid #e0e0e0; }
+._form > ._botonera .btn_deft:hover { background: #e0e0e0; }
+._form > ._botonera .btn_ntl { border: 1px solid #3f51b5; }
+._form > ._botonera .btn_ntl:hover { background: #3f51b5; color: #FFF; }
+._form > ._botonera .btn_go { border: 1px solid #33691e; }
+._form > ._botonera .btn_go:hover { background: #33691e; color: #FFF; }
+
+/*# sourceMappingURL=fv1.css.map */

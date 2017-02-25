@@ -1,0 +1,23 @@
+body{
+	background-image:url("simple-abstract-blue-background-2560x1600.jpg");
+}
+
+#btn_aceptar{
+	width:150px;
+}
+
+.div_esp{
+	border:solid 1px black;
+	background-color:rgb(236, 240, 241);
+	margin-top:100px;
+	padding:18px 30px 37px 40px;
+}
+
+form{
+	margin-left:20px
+}
+
+input{
+	border: 1px solid #666666;
+	width:210px;
+}
