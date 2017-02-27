@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Login</title>
-	<link rel="stylesheet" href="css/estilo_login.css">
-	<link rel="stylesheet" href="css/btp_login.css">	
+	<link    rel="stylesheet" href="css/estilo_login.css">
+	<link    rel="stylesheet" href="css/btp_login.css">	
 	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script  src="js/fns_login.js"></script>
 </head>

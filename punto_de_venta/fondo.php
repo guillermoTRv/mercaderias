@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/estilo_fondo.css">
 	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script  type="text/javascript" src="js/fns_fondo.js"></script>
+	<script  type="text/javascript" src="js/funciones.js"></script>
 	<script>
 		function justNumbers(e)
 			{
@@ -74,7 +74,7 @@
 								  <span class="input-group-addon"><b>$.50</b></span>
 								  <input type="text" class="form-control ipt" id="10" maxlength="4"  data-iptval = ".5" pattern="[0-9]+" name="50c_txt" onkeyup="suma($(this));" onkeypress="return justNumbers(event);" autocomplete="off">
 								</div>
-								<?php echo "<input type='hidden' value='$id_usuario' name='idusuario_txt'>" ?>
+								<?php echo "<input type='hidden' value='$id_usuario' name='usuario_txt'>" ?>
 
 							</div>
 						</div>

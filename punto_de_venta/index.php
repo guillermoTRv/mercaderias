@@ -7,7 +7,7 @@
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script  type="text/javascript" src="js/fns_ventas.js"></script>
+	<script  type="text/javascript" src="js/fns_ventass.js"></script>
 
 </head>
 <body>
@@ -15,7 +15,7 @@
 		<div class="col-md-12 ">
 			<div class="panel panel-default">
 			  	<div class="panel-body">
-					<form class="form-inline">
+					<form class="form-inline" id="form_codigo" method="POST" enctype="form/data">
 					  <div class="form-group">
 					    <label>Codigo de producto</label>
 					    <input type="text" class="form-control" autofocus tabindex="1">
@@ -23,11 +23,14 @@
 					  <div class="form-group">
 					    <label>Tipo precio</label>
 					    <select class="form-control" tabindex="2">
-					    	<option value=""></option>
-					    	<option value=""></option>
+					    	<option value="1">1</option>
+					    	<option value="2">2</option>
 					    </select>				
 					  </div>
 					</form>
+					<div id="m_v">
+						
+					</div>
 
 			 	</div>
 

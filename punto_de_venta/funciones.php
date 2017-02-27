@@ -18,7 +18,7 @@
 	/**Control de errores en el sistema-------------------------------------------**/
 
 	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-	$mens_error = "Surgió un error interno; si esto persiste contacar a sistemas";
+	$mens_error = "Surgió un error interno; si esto persiste contactar a sistemas";
 
 
 	/**Sentencias prehechas-------------------------------------------------------**/
@@ -39,6 +39,19 @@
 		mysqli_close($q_vent);	
 	}
 
+	function insertar($sentencia){
+		global $q_vent;
+		global $mens_error;
+		return $consulta_bd = mysqli_query($q_vent,$sentencia) or die($mens_error);
+		mysqli_close($q_vent);
+	}
+
+	function consulta_gen($sentencia){
+		global $q_vent;
+		global $mens_error;
+		return $consulta_bd = mysqli_query($q_vent,$sentencia) or die($mens_error);
+		mysqli_close($q_vent);
+	}
 
 	/**Control de horario-----------------------------------------------------------**/
 

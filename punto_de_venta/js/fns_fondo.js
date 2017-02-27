@@ -1,17 +1,17 @@
 function suma ($valor){
-	var suma = 0;
-	var operacion = $valor.val();
-	$("#form_fondo").find(".ipt").each(function(idx,obj){
+  var suma = 0;
+  var operacion = $valor.val();
+  $("#form_fondo").find(".ipt").each(function(idx,obj){
 
-		var billete = $(this).data("iptval");
-		$(this).val()==""?val=0:val=$(this).val()	
-		var multiplicacion = val * billete;
-		        
+    var billete = $(this).data("iptval");
+    $(this).val()==""?val=0:val=$(this).val() 
+    var multiplicacion = val * billete;
+            
             suma = suma + multiplicacion;
             $("#textDiv").html("$"+suma);  
         
         
-	});
+  });
 
 };
 
@@ -34,7 +34,7 @@ $(document).keydown(function(){
             $("#"+cambio).focus(); 
         }*/
         if (event.which == 27) {
-        	window.location.href = "../punto_de_venta";
+          window.location.href = "../punto_de_venta";
         }
 });
 
@@ -63,4 +63,3 @@ $(document).ready(function(){
       }
    });
 });
-

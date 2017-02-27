@@ -33,7 +33,7 @@
 			if ($consulta_fondo == 1) {
 				$array_fondo = mysqli_fetch_array($cons_fondo);
 				//saber si tiene cuenta pendiente
-				#echo "<br>Checar tickets";
+				echo "<br>Checar tickets";
 			} 
 			if ($consulta_fondo == 0) {
 				#echo "<br>Mandar a pantalla";
