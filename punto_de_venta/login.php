@@ -34,7 +34,7 @@
 					</div>
 				</div>	
 				<div class="row">
-					<div class="col-md-7 col-md-offset-2">
+					<div class="col-md-10 col-md-offset-2">
 						<div id="mens"></div>			
 					</div>
 				</div>

@@ -58,8 +58,9 @@ $(document).ready(function(){
             }
 
           });
-         window.location.href = "../punto_de_venta/";
+         //window.location.href = "../punto_de_venta/";
          return false;
       }
    });
 });
+
