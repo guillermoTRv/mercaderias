@@ -15,10 +15,10 @@
 		<div class="col-md-12 ">
 			<div class="panel panel-default">
 			  	<div class="panel-body">
-					<form class="form-inline" id="form_codigo" method="POST" enctype="form/data">
+					<form class="form-inline" id="form_cobro" method="POST" enctype="form/data">
 					  <div class="form-group">
 					    <label>Codigo de producto</label>
-					    <input type="text" class="form-control" autofocus tabindex="1">
+					    <input type="text" class="form-control" name="codigo_txt" autofocus>
 					  </div>
 					  <div class="form-group">
 					    <label>Tipo precio</label>
@@ -60,7 +60,45 @@
 					        		</tr>
 					        	</thead>
 					        	<tbody>
-					        		
+					        		<tr>
+					        			<td>10300</td>
+					        			<td>Mochila 1</td>
+					        			<td>2</td>
+					        			<td>$300</td>
+					        			<td>$600</td>
+					        		</tr>
+
+					        		<tr>
+					        			<td>11200</td>
+					        			<td>Dron</td>
+					        			<td>1</td>
+					        			<td>$3400</td>
+					        			<td>$3400</td>
+					        		</tr>
+
+					        		<tr>
+					        			<td>10301</td>
+					        			<td>Lapices</td>
+					        			<td>10</td>
+					        			<td>$12</td>
+					        			<td>$120</td>
+					        		</tr>
+
+					        		<tr>
+					        			<td>11500</td>
+					        			<td>Tenis Nike</td>
+					        			<td>1</td>
+					        			<td>$2200</td>
+					        			<td>$220</td>
+					        		</tr>
+
+					        		<tr>
+					        			<td>11300</td>
+					        			<td>Cuadernos</td>
+					        			<td>6</td>
+					        			<td>$24</td>
+					        			<td>$144</td>
+					        		</tr>
 
 					        	</tbody>
 					        </table>

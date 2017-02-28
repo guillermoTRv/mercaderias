@@ -65,5 +65,38 @@
 		$var_sn = addslashes(htmlspecialchars(strip_tags(trim($_POST[$var_sn]))));
 		return $var_sn;
 	}
+
+
+	/**Sentencias prehechas para usarse en mercaderias-------------------------------**/
+
+	function consulta_valM($sentencia){
+		global $q_merc;
+		global $mens_error;
+		$consulta_bd = mysqli_query($q_merc,$sentencia) or die($mens_error);
+		return $consulta_bd = mysqli_num_rows($consulta_bd);
+		mysqli_close($q_merc);
+	}
+
+	function consulta_arrayM($sentencia){
+		global $q_merc;
+		global $mens_error;
+		$consulta_bd = mysqli_query($q_merc,$sentencia) or die($mens_error);
+		return $consulta_bd = mysqli_fetch_array($consulta_bd);
+		mysqli_close($q_merc);	
+	}
+
+	function insertarM($sentencia){
+		global $q_merc;
+		global $mens_error;
+		return $consulta_bd = mysqli_query($q_merc,$sentencia) or die($mens_error);
+		mysqli_close($q_merc);
+	}
+
+	function consulta_genM($sentencia){
+		global $q_merc;
+		global $mens_error;
+		return $consulta_bd = mysqli_query($q_merc,$sentencia) or die($mens_error);
+		mysqli_close($q_merc);
+	}
 	
 ?>
