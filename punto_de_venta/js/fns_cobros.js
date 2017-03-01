@@ -60,7 +60,50 @@ $(document).keydown(function(){
 			});
 			return false;
 	}
-	
+
+	if (event.which == 107) {
+		//$("#contenido_tabla:last").append("<tr><td>asd</td> <td>asd</td></tr>");
+		var trs_upc        = $("#contenido_tabla tr:last td:eq(0)").html();
+		
+		var trs_desc       = $("#contenido_tabla tr:last td:eq(1)").html();
+		
+		var trs_cantidad_i = parseFloat($("#contenido_tabla tr:last td:eq(2)").html());
+
+		var trs_precio     = parseFloat($("#contenido_tabla tr:last td:eq(3)").html());
+		
+
+		trs_cantidad       = trs_cantidad_i + 1;
+		var trs_total      = trs_cantidad * trs_precio;
+
+		
+		$("#contenido_tabla tr#tr-"+trs_upc+"").html("<td class='dato_codigo'>"+trs_upc+"</td><td>"+trs_desc+"</td><td>"+trs_cantidad+"</td><td>"+trs_precio+"</td><td>"+trs_total+"</td>");
+	}
+
+	if (event.which == 109) {
+		//$("#contenido_tabla:last").append("<tr><td>asd</td> <td>asd</td></tr>");
+		var trr_upc        = $("#contenido_tabla tr:last td:eq(0)").html();
+		
+		var trr_desc       = $("#contenido_tabla tr:last td:eq(1)").html();
+		
+		var trr_cantidad_i = parseFloat($("#contenido_tabla tr:last td:eq(2)").html());
+
+		var trr_precio     = parseFloat($("#contenido_tabla tr:last td:eq(3)").html());
+		
+
+		var trr_cantidad       = trr_cantidad_i - 1;
+		var trr_total      = trr_cantidad * trr_precio;
+		
+		if (trr_cantidad == 0) {
+			confirm("Se borrara por completo el articulo");
+			$("tr").remove("#contenido_tabla tr#tr-"+trr_upc+"")
+
+		}
+		if (trr_cantidad > 0) {
+			$("#contenido_tabla tr#tr-"+trr_upc+"").html("<td class='dato_codigo'>"+trr_upc+"</td><td>"+trr_desc+"</td><td>"+trr_cantidad+"</td><td>"+trr_precio+"</td><td>"+trr_total+"</td>");	
+		}
+		
+	}
+
 });
 
 
