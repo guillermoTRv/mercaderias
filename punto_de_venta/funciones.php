@@ -1,11 +1,19 @@
 <?php 
 	/**Datos de conexion a la base de datos---------------------------------------**/
+	
+	$servidor    = "localhost";
+	$usuario     = "root";
+	
+	/**
+	$servidor    = "sanjoseptegrande.com";
+	$usuario     = "sanjosep_floresf";
+	*/
 
-	$servidor  = "localhost";
-	$usuario   = "root";
-	$password  = "";
-	$bd_m      = "mercaderias";
-	$bd_v      = "sanjosep_ventas";
+	$password    = "";
+	$bd_m        = "mercaderias";
+	$bd_v        = "sanjosep_ventas";
+
+
 
 	global $q_merc;
 	$q_merc = mysqli_connect($servidor,$usuario,$password,$bd_m);

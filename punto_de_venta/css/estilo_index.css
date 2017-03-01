@@ -7,8 +7,8 @@ body{
 }
 
 .btn_cobrar{
-	width:100px;
 	height:100px;
+  text-align: center;
 }
 
 .label_inv{font-size:.85em;}

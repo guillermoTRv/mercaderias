@@ -3,12 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Punto de venta</title>
-	<link rel="stylesheet" href="css/estilo_indexxx.css">
+	<link rel="stylesheet" href="css/estilo_index.css">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script  type="text/javascript" src="js/fns_ventass.js"></script>
-
+	<script  type="text/javascript" src="js/fns_cobrosssss.js"></script>
 </head>
 <body>
 	<div class="container div_principal">
@@ -18,7 +17,7 @@
 					<form class="form-inline" id="form_cobro" method="POST" enctype="form/data">
 					  <div class="form-group">
 					    <label>Codigo de producto</label>
-					    <input type="text" class="form-control" name="codigo_txt" autofocus>
+					    <input type="text" class="form-control" name="codigo_txt" id="input_codigo" autofocus>
 					  </div>
 					  <div class="form-group">
 					    <label>Tipo precio</label>
@@ -27,10 +26,12 @@
 					    	<option value="2">2</option>
 					    </select>				
 					  </div>
+					  <div class="form-group" id="mensaje_nulo" style="margin-left:10px">
+
+					  </div>
+
 					</form>
-					<div id="m_v">
-						
-					</div>
+					
 
 			 	</div>
 
@@ -39,7 +40,7 @@
 			    <div class="panel-body">
 					<div class="row">
 						<div class="col-md-7">
-				        	<table class="table table-bordered" id="tabla_vnt">
+				        	<table class="table table-bordered">
 					        	<thead>
 					        		<tr style="font-size:.9em">
 					        			<th>
@@ -59,47 +60,8 @@
 					        			</th>
 					        		</tr>
 					        	</thead>
-					        	<tbody>
-					        		<tr>
-					        			<td>10300</td>
-					        			<td>Mochila 1</td>
-					        			<td>2</td>
-					        			<td>$300</td>
-					        			<td>$600</td>
-					        		</tr>
-
-					        		<tr>
-					        			<td>11200</td>
-					        			<td>Dron</td>
-					        			<td>1</td>
-					        			<td>$3400</td>
-					        			<td>$3400</td>
-					        		</tr>
-
-					        		<tr>
-					        			<td>10301</td>
-					        			<td>Lapices</td>
-					        			<td>10</td>
-					        			<td>$12</td>
-					        			<td>$120</td>
-					        		</tr>
-
-					        		<tr>
-					        			<td>11500</td>
-					        			<td>Tenis Nike</td>
-					        			<td>1</td>
-					        			<td>$2200</td>
-					        			<td>$220</td>
-					        		</tr>
-
-					        		<tr>
-					        			<td>11300</td>
-					        			<td>Cuadernos</td>
-					        			<td>6</td>
-					        			<td>$24</td>
-					        			<td>$144</td>
-					        		</tr>
-
+					        	<tbody id="contenido_tabla">	
+									
 					        	</tbody>
 					        </table>
 				        
@@ -143,17 +105,19 @@
 
 			        <div class="row">
 			        	<div class="col-md-12">
-			        		<div class="btn-group btn-group-lg" role="group" aria-label="">
-				        		<button type="button" class="btn btn-default">fn</button>
-				        		<button type="button" class="btn btn-default">fn</button>
-				        		<button type="button" class="btn btn-default">fn</button>
-				        		<button type="button" class="btn btn-default">fn</button>
-				        		<button type="button" class="btn btn-default">fn</button>
-				        		<button type="button" class="btn btn-default">fn</button>
-				        		<button type="button" class="btn btn-default">fn</button>
-				        	</div>	
+			        		<button type="button" class="btn btn-default btn_cobrar">Buscar F10 </button>
+			        		<button type="button" class="btn btn-default btn_cobrar">Insertar varios<br>(insert)</button>
+			        		<button type="button" class="btn btn-default btn_cobrar">Art no registrado<br>(F10) </button>
+			        		<button type="button" class="btn btn-default btn_cobrar">Venta especial<br>(F4) </button>
+			        		<button type="button" class="btn btn-default btn_cobrar">Entradas<br>(Ctrl+S) </button>
+			        		<button type="button" class="btn btn-default btn_cobrar">Eliminar Articulo<br>(supr) </button>
+			        		<button type="button" class="btn btn-default btn_cobrar">Ticket pend<br>(F6) </button>
+			        		<button type="button" class="btn btn-default btn_cobrar">Cambiar ticket<br>(F5) </button>
+			        		<button type="button" class="btn btn-default btn_cobrar"><p>Cancelacion o <br>devolucion(Ctrl + d) </p></button>	
+
 			        	</div>
 			        </div>
+			        <div id="contador"></div>
 			    </div>
 			</div>
 
