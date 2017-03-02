@@ -94,9 +94,14 @@ $(document).keydown(function(){
 		var trr_total      = trr_cantidad * trr_precio;
 		
 		if (trr_cantidad == 0) {
-			confirm("Se borrara por completo el articulo");
-			$("tr").remove("#contenido_tabla tr#tr-"+trr_upc+"")
-
+			
+			var control_resta;
+		    var r = confirm("Desea eliminar este articulo de esta compra");
+		    if (r == true) {
+		    	$("tr").remove("#contenido_tabla tr#tr-"+trr_upc+"");    
+		    } else {
+		        
+		    }
 		}
 		if (trr_cantidad > 0) {
 			$("#contenido_tabla tr#tr-"+trr_upc+"").html("<td class='dato_codigo'>"+trr_upc+"</td><td>"+trr_desc+"</td><td>"+trr_cantidad+"</td><td>"+trr_precio+"</td><td>"+trr_total+"</td>");	

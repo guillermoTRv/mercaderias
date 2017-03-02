@@ -9,6 +9,8 @@
 	if ($validacion_upc == 0) {
 		echo "nulo";
 	}
+
+	
 	else{
 		$array_upc   = consulta_arrayM($sentencia_upc);
 		$sku         = $array_upc['sku'];
